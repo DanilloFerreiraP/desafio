@@ -28,7 +28,7 @@ class HealthUnitSeeder extends Seeder
             ],
         ];
 
-        //estou pesquisando primeiro para evitar inserir novamente
+        // estou pesquisando primeiro para evitar inserir novamente
         foreach ($units as $unit) {
             HealthUnit::firstOrCreate($unit);
         }
