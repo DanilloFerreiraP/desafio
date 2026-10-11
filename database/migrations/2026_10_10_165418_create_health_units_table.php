@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // cria a tabela de unidades de saúde com os campos id, name e city.
     public function up(): void
     {
         Schema::create('health_units', function (Blueprint $table) {
@@ -17,6 +18,7 @@ return new class extends Migration
         });
     }
 
+    // em caso de rollback, a tabela de unidades de saúde será removida.
     public function down(): void
     {
         Schema::dropIfExists('health_units');

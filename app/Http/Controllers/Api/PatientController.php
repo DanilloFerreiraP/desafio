@@ -13,6 +13,7 @@ class PatientController extends Controller
     // lista os pacientes, com opcao de pesquisa parcial pelo nome
     public function index(Request $request): JsonResponse
     {
+        // with() realizando eager loading para evitar N+1 queries, buscando apenas os campos id e name da unidade de saúde relacionada.
         $query = Patient::with('healthUnit:id,name');
 
         if ($request->filled('search')) {
@@ -64,7 +65,7 @@ class PatientController extends Controller
         ]);
     }
 
-    // exclui um paciente pelo identificador informado na rota.
+    // exclui um paciente pelo identificador.
     public function destroy(Patient $patient): JsonResponse
     {
         $patient->delete();
