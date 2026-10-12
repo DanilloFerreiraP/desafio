@@ -1,59 +1,202 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Desafio PHP Júnior
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicação de gerenciamento de pacientes e unidades de saúde, desenvolvida com Laravel e MySQL.
 
-## About Laravel
+O sistema disponibiliza uma API REST para cadastro, consulta, atualização, exclusão e pesquisa de pacientes, além de uma interface web em HTML, CSS e JavaScript puro.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tecnologias utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP 8.2
+- Laravel 12
+- MySQL
+- HTML, CSS e JavaScript
+- Bootstrap 5
+- PHPUnit (testes automatizados)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requisitos
 
-## Learning Laravel
+- PHP 8.2 ou superior, compatível com Laravel 12
+- Composer
+- MySQL
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Instalação
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**1. Clone o repositório:**
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/DanilloFerreiraP/desafio.git
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**2. Entre na pasta do projeto:**
 
-### Premium Partners
+```bash
+cd desafio
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**3. Instale as dependências:**
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**4. Crie o arquivo de configuração a partir do exemplo:**
 
-## Code of Conduct
+```bash
+cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**5. Gere a chave da aplicação:**
 
-## Security Vulnerabilities
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**6. Crie um banco de dados vazio no MySQL**, por exemplo, `conectasus_desafio`.
 
-## License
+**7. Configure a conexão no arquivo `.env`:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=conectasus_desafio
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Ajuste o nome do banco, usuário e senha conforme seu ambiente.
+
+**8. Execute as migrations e os seeders:**
+
+```bash
+php artisan migrate --seed
+```
+
+**9. Inicie o servidor:**
+
+```bash
+php artisan serve
+```
+
+**10. Acesse a interface web:**
+
+http://127.0.0.1:8000/index.html
+
+## Funcionalidades
+
+- Cadastro de pacientes com nome, CPF, data de nascimento, telefone opcional e unidade de saúde.
+- Listagem dos pacientes e respectivas unidades de saúde.
+- Pesquisa parcial de pacientes pelo nome.
+- Edição e exclusão de pacientes.
+- Validação dos campos obrigatórios e CPF com 11 dígitos e valor único.
+- Carregamento de unidades de saúde cadastradas pelo seeder.
+
+A interface mantém a lista de pacientes em memória para realizar a pesquisa localmente. Após operações de cadastro, edição e exclusão, a lista é atualizada por meio da API.
+
+## Endpoints da API
+
+| Método | Endpoint | Descrição |
+|---|---|---|
+| GET | `/api/health-units` | Listar unidades de saúde |
+| GET | `/api/patients` | Listar pacientes |
+| GET | `/api/patients?search=Maria` | Pesquisar pacientes pelo nome |
+| GET | `/api/patients/{id}` | Consultar um paciente |
+| POST | `/api/patients` | Cadastrar paciente |
+| PUT | `/api/patients/{id}` | Atualizar paciente |
+| DELETE | `/api/patients/{id}` | Excluir paciente |
+
+As operações de cadastro e atualização recebem dados em JSON.
+
+**Exemplo de cadastro:**
+
+```json
+{
+  "name": "Maria da Silva",
+  "cpf": "12345678909",
+  "birth_date": "1995-05-20",
+  "phone": "88999999999",
+  "health_unit_id": 1
+}
+```
+
+O campo `health_unit_id` deve corresponder a uma unidade de saúde cadastrada no banco de dados.
+
+## Testes automatizados
+
+O projeto possui testes automatizados para a API de pacientes, utilizando PHPUnit.
+
+Os testes verificam a listagem, o cadastro, a validação de CPF duplicado, a atualização e a exclusão de pacientes.
+
+Para executar os testes, crie um banco MySQL chamado `conectasus_test` e configure o arquivo `.env.testing` com os dados de conexão desse banco.
+
+Exemplo de configuração:
+
+```dotenv
+APP_ENV=testing
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=conectasus_test
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+O arquivo `phpunit.xml` também deve apontar para o banco `conectasus_test`.
+
+Após configurar o ambiente, confirme se a conexão está apontando para o banco de testes:
+
+```bash
+php artisan tinker --env=testing
+```
+
+Dentro do Tinker, execute:
+
+```php
+DB::selectOne('SELECT DATABASE() AS banco');
+```
+
+O resultado deve indicar `conectasus_test`. Digite `exit` para sair do Tinker.
+
+Execute as migrations no banco de testes:
+
+```bash
+php artisan migrate --env=testing
+```
+
+Para verificar se as migrations foram executadas:
+
+```bash
+php artisan migrate:status --env=testing
+```
+
+Execute os testes automatizados:
+
+```bash
+php artisan test --filter=PatientApiTest
+```
+
+Os testes utilizam `RefreshDatabase` para manter os dados isolados. Não utilize o banco principal da aplicação para executá-los.
+
+## Consultas SQL
+
+O arquivo `sql/consultas.sql` contém as três consultas solicitadas no desafio:
+
+1. Listar os pacientes e os nomes das respectivas unidades de saúde utilizando `JOIN`.
+2. Contar os pacientes por unidade, incluindo unidades sem pacientes, utilizando `LEFT JOIN` e `GROUP BY`.
+3. Pesquisar pacientes por parte do nome utilizando `LIKE`.
+
+As consultas podem ser executadas diretamente no MySQL ou no phpMyAdmin.
+
+## Organização do projeto
+
+- `app/Http/Controllers/Api/` — Controllers da API.
+- `app/Http/Requests/` — Validação dos dados de pacientes.
+- `app/Models/` — Models e relacionamentos.
+- `database/migrations/` — Estrutura das tabelas.
+- `database/seeders/` — Dados iniciais das unidades de saúde.
+- `routes/api.php` — Rotas da API REST.
+- `public/index.html` — Interface web.
+- `public/js/patients.js` — Consumo da API e interações.
+- `public/css/patients.css` — Estilos da interface.
+- `sql/consultas.sql` — Consultas SQL obrigatórias.
